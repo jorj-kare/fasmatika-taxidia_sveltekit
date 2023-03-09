@@ -1,10 +1,10 @@
 import User from '$lib/server/db/models/user';
-import { connectToDB } from '$lib/server/db/mongoDB';
+import { startMongoDB } from '$lib/server/db/mongoDB';
 import { verifyToken } from '$lib/server/utils/jsonwebtoken';
 
 import { MODE } from '$env/static/private';
 
-connectToDB().then(async () => {
+startMongoDB().then(async () => {
 	console.log('You have successfully connected to the database!');
 });
 
