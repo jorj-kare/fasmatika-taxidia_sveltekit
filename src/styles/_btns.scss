@@ -1,0 +1,16 @@
+@use './variables' as *;
+.btn-round {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem;
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 3px solid $color-white;
+	border-radius: 50px;
+	color: $color-white;
+	background-color: transparent;
+	font-size: 1.5rem;
+	font-weight: 600;
+	cursor: pointer;
+}
