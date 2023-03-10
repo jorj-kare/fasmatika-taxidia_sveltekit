@@ -1,11 +1,15 @@
 @use 'animations';
 @use 'variables';
 @use 'btns';
+
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700&display=swap');
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+html {
+	font-size: 62.5%; // 10px/16px = 62.5% -> 1rem = 10px
 }
 html,
 body {
@@ -17,7 +21,7 @@ body {
 body {
 	box-sizing: border-box;
 	overflow: scroll;
-	font-size: 16px;
+	font-size: 1.6rem;
 	/* font-family: "Advent Pro", sans-serif; */
 	font-family: 'Inconsolata', monospace;
 	color: variables.$color-white;
