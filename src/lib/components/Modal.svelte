@@ -9,8 +9,7 @@
 	style:opacity
 	style:background-color={backgroundColor}
 	in:slide={{ duration: 800 }}
-	out:fade
->
+	out:fade>
 	<slot />
 </div>
 

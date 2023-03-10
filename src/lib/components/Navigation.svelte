@@ -6,7 +6,11 @@
 </script>
 
 <div class="nav">
-	<button id="nav-btn" class="nav__button btn-round" class:rotate={hidden} type="button">
+	<button
+		id="nav-btn"
+		class="nav__button btn-round"
+		class:rotate={hidden}
+		type="button">
 		M
 	</button>
 
@@ -20,8 +24,7 @@
 					delay: 50,
 					duration: 1200,
 					easing: backInOut
-				}}
-			>
+				}}>
 				<a href="/">Αρχική</a>
 			</li>
 			<li
@@ -32,8 +35,7 @@
 					delay: 200,
 					duration: 1200,
 					easing: backInOut
-				}}
-			>
+				}}>
 				<a href="/new-post">Νέο πόστ</a>
 			</li>
 
@@ -45,8 +47,7 @@
 					delay: 350,
 					duration: 1200,
 					easing: backInOut
-				}}
-			>
+				}}>
 				<a href="/account">Προφίλ</a>
 			</li>
 		</ul>
@@ -56,8 +57,8 @@
 <style lang="scss">
 	.nav {
 		position: absolute;
-		top: 2rem;
-		right: 2rem;
+		top: 2.5rem;
+		right: 2.5rem;
 		z-index: 1;
 	}
 	button {
@@ -70,32 +71,32 @@
 
 	ul {
 		display: flex;
+		justify-content: center;
 		gap: 0.25rem;
-		margin: 0 -1rem;
+		margin: 0 -1.6rem;
 		list-style: none;
 		:nth-child(1) {
-			margin-top: 0.5rem;
+			margin-top: 0.8rem;
 		}
 		:nth-child(2) {
-			margin-top: 2.5rem;
+			margin-top: 4.5rem;
 		}
 		:nth-child(3) {
-			margin-top: 1.5rem;
+			margin-top: 2rem;
 		}
 	}
 
 	li {
 		writing-mode: vertical-rl;
 		text-orientation: upright;
-		font-size: 1.3rem;
+		font-size: 2rem;
 		font-weight: 300;
-		letter-spacing: 0.5rem;
+		letter-spacing: 0.7rem;
 		cursor: pointer;
 		transition: all 0.5s;
 		&:hover,
 		&:active {
 			transform: translateY(4px);
-
 			text-shadow: (0 2px 10px #fffdfd);
 		}
 	}
