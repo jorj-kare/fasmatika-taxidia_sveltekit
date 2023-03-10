@@ -20,9 +20,19 @@
 		"eslint-plugin-svelte3": "^4.0.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
+		"sass": "^1.58.3",
 		"svelte": "^3.54.0",
+		"svelte-preprocess": "^5.0.1",
 		"vite": "^4.0.0",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"bcrypt": "^5.1.0",
+		"jsonwebtoken": "^9.0.0",
+		"mongoose": "^7.0.0",
+		"svelte-icons": "^2.1.0",
+		"svelte-loading-spinners": "^0.3.4",
+		"uuid": "^9.0.0"
+	}
 }
