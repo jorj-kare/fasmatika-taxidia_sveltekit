@@ -7,36 +7,36 @@
 <style lang="scss">
 	a {
 		position: absolute;
-		top: 2rem;
-		right: 2rem;
+		top: 2.5rem;
+		right: 2.5rem;
+		font-size: 2.8rem;
 		z-index: 3;
+		transition: box-shadow 0.5s;
 		&:hover {
-			box-shadow: 0 0 5px 1px $color-white;
+			box-shadow: 0 0 8px $color-white;
 		}
 	}
 
 	a:before {
-		content: '|';
+		content: '\2758';
 		position: absolute;
-		top: 1.2rem;
-		left: 1.7rem;
 		transform: rotate(90deg);
+		left: 2.5rem;
 		-webkit-backface-visibility: hidden;
 		transition: all 1s;
 	}
 	a:after {
-		content: '|';
+		content: '\2758';
 		position: absolute;
-		top: 1.2rem;
-		left: 1.5rem;
 		transform: rotate(-90deg);
+		left: 2.2rem;
 		-webkit-backface-visibility: hidden;
 		transition: all 1s;
 	}
 	a:hover:after {
-		transform: rotate(-398deg) scale(1.2);
+		transform: rotate(-399deg) scale(1.2);
 	}
 	a:hover:before {
-		transform: rotate(398deg) scale(1.2);
+		transform: rotate(399deg) scale(1.2);
 	}
 </style>

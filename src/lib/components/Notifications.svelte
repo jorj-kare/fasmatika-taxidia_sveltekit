@@ -15,8 +15,7 @@
 	<div
 		transition:fly={{ duration: 1200, y: -100, easing: backInOut }}
 		class:error={$notificationStore.type === 'error'}
-		class:success={$notificationStore.type === 'success'}
-	>
+		class:success={$notificationStore.type === 'success'}>
 		<p>{$notificationStore.msg}</p>
 	</div>{/if}
 
@@ -25,18 +24,18 @@
 		position: fixed;
 		left: 50%;
 		transform: translateX(-50%);
-		margin-top: 1rem;
-		padding: 1rem 2rem;
+		margin-top: 1.5rem;
+		padding: 1.5rem 2.5rem;
 		border-radius: 10px;
 		color: $color-white;
-		font-size: 1.5rem;
+		font-size: 2rem;
 		z-index: 10;
 	}
 
 	.error {
-		background-color: #ab3131b5;
+		background-color: $color-error;
 	}
 	.success {
-		background-color: #055c45d2;
+		background-color: $color-success;
 	}
 </style>

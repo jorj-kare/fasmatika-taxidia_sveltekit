@@ -64,7 +64,7 @@
 	button {
 		transition: 0.5s all linear;
 		&:hover,
-		&active {
+		&:active {
 			text-shadow: 0 0 10px $color-white;
 		}
 	}
@@ -101,9 +101,6 @@
 		}
 	}
 
-	.hidden {
-		display: none;
-	}
 	.rotate {
 		transform: rotate(360deg);
 	}
