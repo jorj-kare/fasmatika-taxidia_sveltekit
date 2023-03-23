@@ -32,9 +32,8 @@ export const POST = async ({ request }) => {
 		const newPost = await Post.create({
 			title: formData.get('title'),
 			content: formData.get('content'),
-			img: filename
-			// TODO get username after login
-			// author: ' '
+			img: filename,
+			author: formData.get('author')
 		});
 		return json(
 			{ data: { newPost } },
