@@ -7,7 +7,8 @@
 		setTimeout(() => {
 			$notificationStore.msg = '';
 			$notificationStore.type = '';
-		}, 4000);
+			$notificationStore.sec = 4000;
+		}, $notificationStore.sec);
 	}
 </script>
 

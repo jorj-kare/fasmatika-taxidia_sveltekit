@@ -1,5 +1,5 @@
 <script>
-	import notificationStore from '$stores/notifications';
+	import notificationsStore from '$stores/notifications';
 	import CloseBtn from '$components/account/CloseBtn.svelte';
 	import Modal from '$components/Modal.svelte';
 	import Field from '$components/form/Field.svelte';
@@ -8,6 +8,7 @@
 	import getRandomColor from '$lib/utils/getRandomColor';
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/form/Button.svelte';
+	import { goto } from '$app/navigation';
 
 	let backgroundColor;
 
@@ -27,9 +28,18 @@
 			if (!res.ok) {
 				throw new Error(resJson.message);
 			}
-			notificationStore.set({ type: 'success', msg: 'Επιτυχής σύνδεση!' });
+
+			$notificationsStore.type = 'success';
+			$notificationsStore.msg = 'Επιτυχής σύνδεση!';
+			$notificationsStore.sec = 1500;
+			setTimeout(() => {
+				goto('/', {
+					invalidateAll: true
+				});
+			}, 2000);
 		} catch (err) {
-			notificationStore.set({ type: 'error', msg: err.message });
+			$notificationsStore.type = 'error';
+			$notificationsStore.msg = err.message;
 		}
 	}
 	onMount(() => {
@@ -41,7 +51,7 @@
 	<Form on:submit={login}>
 		<Field label="Όνομα χρήστη" name="username" validate={isFieldEmpty} />
 		<Field label="Κωδικός" name="password" validate={isFieldEmpty} />
-		<Button size="b" color={backgroundColor}>Σύνδεση</Button>
+		<Button type="submit" color={backgroundColor}>Σύνδεση</Button>
 	</Form>
 
 	<CloseBtn page="account" />

@@ -4,7 +4,7 @@
 	import Form from '$components/form/Form.svelte';
 	import Field from '$components/form/Field.svelte';
 	import Button from '$components/form/Button.svelte';
-	import notifications from '$stores/notifications';
+	import notificationsStore from '$stores/notifications';
 	import getRandomColor from '$lib/utils/getRandomColor';
 	import {
 		isFieldEmpty,
@@ -18,7 +18,6 @@
 	async function signUp(e) {
 		try {
 			const { username, password, confirmPassword, profileImg } = e.detail;
-			console.log(username, password, confirmPassword, profileImg);
 
 			const form = new FormData();
 			form.append('username', username);
@@ -33,15 +32,20 @@
 
 			const resJson = await res.json();
 
-			if (!res.ok) throw resJson;
-			$notifications.msg = 'You have successfully sign-up!';
-			$notifications.type = 'success';
-			goto('/account/login', {
-				invalidateAll: true
-			});
+			if (!res.ok) throw new Error(resJson.message);
+
+			$notificationsStore.type = 'success';
+			$notificationsStore.msg = 'Επιτυχής εγγραφή!';
+			$notificationsStore.sec = 2000;
+
+			setTimeout(() => {
+				goto('/account/login', {
+					invalidateAll: true
+				});
+			}, 2500);
 		} catch (err) {
-			$notifications.msg = err.message;
-			$notifications.type = 'error';
+			$notificationsStore.type = 'error';
+			$notificationsStore.msg = err.message;
 		}
 	}
 	onMount(() => {
