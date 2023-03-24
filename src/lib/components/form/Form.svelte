@@ -4,6 +4,7 @@
 	import { formKey } from '$components/form/key';
 
 	const dispatch = createEventDispatcher();
+	$formStore.values = {};
 	setContext(formKey, formStore);
 
 	function onsubmit() {
@@ -18,7 +19,7 @@
 	}
 </script>
 
-<form on:submit|preventDefault={onsubmit}>
+<form autocomplete="off" on:submit|preventDefault={onsubmit}>
 	<slot />
 </form>
 

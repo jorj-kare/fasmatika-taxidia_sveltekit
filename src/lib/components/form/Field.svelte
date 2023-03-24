@@ -13,9 +13,9 @@
 	export let type = 'text';
 	export let name;
 	export let id = uuid();
-	export let validate;
+	export let validate = undefined;
 	let formStore = getContext(formKey);
-	$: console.log($formStore);
+
 	function oninput(e) {
 		const value = e.currentTarget.value;
 
