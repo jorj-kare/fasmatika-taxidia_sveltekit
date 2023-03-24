@@ -1,9 +1,11 @@
 <script>
 	export let color;
 	export let size = 'm';
+	export let type = 'button';
 </script>
 
 <button
+	{type}
 	style:color
 	class:small={size === 's'}
 	class:medium={size === 'm'}
