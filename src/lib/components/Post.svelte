@@ -4,6 +4,8 @@
 	export let content;
 	export let username;
 	export let usernameImg;
+
+	const profileImg = usernameImg ? usernameImg : 'defaultUser.jpg';
 </script>
 
 <div class="post">
@@ -19,7 +21,7 @@
 		</p>
 	</div>
 	<div class="author">
-		<img src={usernameImg} alt={username} />
+		<img src={`/images/users/${profileImg}`} alt={username} />
 		<p>{username}</p>
 	</div>
 </div>
@@ -28,20 +30,21 @@
 	.post {
 		display: grid;
 		grid-template-columns: 3rem repeat(6, 1fr) 3rem;
-		grid-template-rows: 10rem 1fr 1fr 10rem;
+		grid-template-rows: 12rem 1fr 1fr 12rem;
 		min-height: 100vh;
 		border-bottom: 3px solid $color-white;
+		background-color: $color-black;
 	}
 	figure {
-		grid-column: 2/5;
+		grid-column: 2/6;
 		grid-row: 2/-1;
 		display: flex;
 		align-items: center;
 		padding: 2rem;
 		margin-bottom: 2rem;
 		max-height: 100vh;
-		border-right: 3px solid $color-white;
-		background-color: $color-black;
+		// border: 3px solid $color-white;
+
 		img {
 			width: 100%;
 			height: auto;
@@ -51,52 +54,63 @@
 		}
 	}
 
+	.title {
+		grid-column: 6/8;
+		grid-row: 1/2;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		letter-spacing: 0.2rem;
+		z-index: 1;
+		h1 {
+			// padding: 2rem;
+			border-radius: 10px;
+			// color: $color-black;
+			// background-color: $color-white;
+			font-size: 3.5rem;
+			font-weight: 600;
+		}
+	}
+
 	.text {
-		grid-column: 5/8;
+		grid-column: 6/8;
 		grid-row: 2/4;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		max-width: 60ch;
 		height: 100%;
 		padding: 0 5rem;
-		overflow-y: scroll;
-		font-size: 1.6rem;
-		line-height: 1.5;
-		background-color: $color-black;
-	}
-	.title {
-		grid-column: 2/8;
-		grid-row: 1/2;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 2rem;
 
-		letter-spacing: 0.5rem;
-		z-index: 1;
-		h1 {
-			padding-bottom: 0.2rem;
-			font-weight: 500;
+		p {
+			padding: 3rem 4rem;
+			border-radius: 50px;
+			max-width: 60ch;
+			background-color: #000000bd;
+			font-size: 2.2rem;
+			letter-spacing: 0.3rem;
+			line-height: 1.5;
 		}
 	}
 
 	.author {
-		grid-column: 5/8;
+		grid-column: 6/8;
 		grid-row: 4/5;
 		display: flex;
+		// flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		gap: 1rem;
+		align-content: baseline;
+		gap: 0.5rem;
+		// margin-bottom: 2rem;
 
 		img {
-			width: 4rem;
-			height: 4rem;
+			width: 7rem;
+			height: 7rem;
 			border-radius: 50px;
 		}
 		p {
-			font-size: 1.6rem;
+			font-size: 2.1rem;
 		}
 	}
 </style>
