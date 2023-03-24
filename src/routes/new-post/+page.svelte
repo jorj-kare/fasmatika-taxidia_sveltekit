@@ -16,8 +16,6 @@
 	let file;
 	let submit;
 
-	$: console.log(data);
-
 	export const snapshot = {
 		capture: () => {
 			return {
@@ -54,21 +52,19 @@
 			const resJson = res.json();
 
 			if (!res.ok) throw new Error(resJson.message);
-			notificationsStore.set({
-				type: 'success',
-				msg: 'Το ποστ έχει αποθηκευτεί με επιτυχία',
-				sec: 2000
-			});
+
+			$notificationsStore.type = 'success';
+			$notificationsStore.msg = 'Το ποστ έχει αποθηκευτεί με επιτυχία';
+			$notificationsStore.sec = 2000;
+
 			setTimeout(() => {
 				goto('/', {
 					invalidateAll: true
 				});
 			}, 2500);
 		} catch (err) {
-			notificationsStore.set({
-				type: 'error',
-				msg: err.message
-			});
+			$notificationsStore.type = 'error';
+			$notificationsStore.msg = err.message;
 		}
 	}
 
