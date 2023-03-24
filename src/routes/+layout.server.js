@@ -1,5 +1,3 @@
 export const load = ({ locals }) => {
-	return {
-		user: locals.user
-	};
+	return locals.user;
 };
