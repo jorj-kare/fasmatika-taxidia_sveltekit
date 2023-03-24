@@ -1,10 +1,27 @@
 <script>
 	import AccountBtn from '$components/account/AccountButtons.svelte';
 	import { fade } from 'svelte/transition';
+	import { goto } from '$app/navigation';
+
+	export let data;
+
+	async function logout() {
+		await fetch('/api/account/logout', {
+			method: 'POST',
+			body: {}
+		});
+
+		goto('/', {
+			invalidateAll: true
+		});
+	}
 </script>
 
 <div class="account" transition:fade={{ duration: 800 }}>
-	<AccountBtn href="/account/login">Σύνδεση</AccountBtn>
+	{#if data.user}
+		<AccountBtn href="#" on:click={logout}>Αποσύνδεση</AccountBtn>
+	{:else}
+		<AccountBtn href="/account/login">Σύνδεση</AccountBtn>{/if}
 	<AccountBtn href="/account/signUp">Δημιουργία λογαριασμού</AccountBtn>
 </div>
 

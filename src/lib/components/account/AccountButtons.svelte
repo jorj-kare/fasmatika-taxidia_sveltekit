@@ -2,7 +2,7 @@
 	export let href;
 </script>
 
-<a {href}><slot /></a>
+<a on:click {href}><slot /></a>
 
 <style lang="scss">
 	a {
