@@ -59,6 +59,7 @@
 		transition:fade|local={{ duration: 100 }}
 		id="closeBtn"
 		class="btn-round"
+		class:light={$navStore.mode === 'light'}
 		href="/{$navStore.page}">
 		<p /></a>
 {/if}
@@ -146,5 +147,9 @@
 		&:hover:before {
 			transform: rotate(399deg) scale(1.2);
 		}
+	}
+	.light {
+		color: $color-black;
+		border-color: $color-black;
 	}
 </style>

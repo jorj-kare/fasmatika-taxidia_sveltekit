@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store';
 
-export default writable({ type: 'nav', page: '' });
+export default writable({ type: 'nav', page: '', mode: 'dark' });
