@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 </script>
 
-<header transition:fade={{ duration: 800 }}>
+<header transition:fade|local={{ duration: 800 }}>
 	<h1>
 		ΗΜΕΡΟΛΟΓΙΑ ΦΑ<span>ΝΤΑ</span>ΣΜΑΤΙΚΩΝ ΤΑΞΙΔΙΩΝ
 	</h1>
@@ -46,11 +46,10 @@
 		align-self: flex-end;
 		margin-bottom: 6rem;
 		padding: 2rem;
-		width: 80%;
-		text-align: center;
+		width: 70%;
 		border: 3px solid $color-white;
 		border-radius: 15px;
-		font-size: 2.5rem;
+		font-size: 2.8rem;
 		font-weight: 400;
 		line-height: 4rem;
 		&:hover span {

@@ -154,13 +154,12 @@
 		display: grid;
 		grid-template-columns: repeat(12, 1fr);
 		grid-template-rows: repeat(6, 20rem);
-
 		gap: 1rem;
 		padding-top: 15rem;
 		letter-spacing: 0.3rem;
 
 		label {
-			font-size: 2.2rem;
+			font-size: 2.6rem;
 			color: $color-white;
 			transition: all 0.5s;
 		}
@@ -180,6 +179,7 @@
 		grid-row: 1/2;
 		grid-column: 3/4;
 		padding-bottom: 0.5rem;
+		letter-spacing: 0.1rem;
 		writing-mode: vertical-rl;
 		text-orientation: upright;
 	}

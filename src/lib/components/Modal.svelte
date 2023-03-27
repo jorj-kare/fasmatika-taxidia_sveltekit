@@ -1,5 +1,5 @@
 <script>
-	import { slide, fade } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	export let opacity = 0.6;
 	export let backgroundColor = '#00000';
 </script>
@@ -8,8 +8,7 @@
 	class="wrapper"
 	style:opacity
 	style:background-color={backgroundColor}
-	in:slide={{ duration: 800 }}
-	out:fade>
+	transition:fade={{ duration: 800 }}>
 	<slot />
 </div>
 
