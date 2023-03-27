@@ -3,9 +3,14 @@ import Post from '$lib/server/db/models/post';
 import { checkError } from '$lib/server/utils/customErrors';
 
 export const GET = async ({ params }) => {
-	const post = await Post.findById(params.id).populate('author');
-	if (!post) throw error(404, 'No post found with this id.');
-	return json({ data: { post } }, { status: 200, statusText: 'success' });
+	try {
+		const post = await Post.findById(params.id).populate('author');
+		if (!post) throw error(404, 'No post found with this id.');
+		return json({ data: { post } }, { status: 200, statusText: 'success' });
+	} catch (err) {
+		const { msg, statusCode } = checkError(err);
+		throw error(statusCode, msg);
+	}
 };
 export const PATCH = async ({ params, request }) => {
 	try {
