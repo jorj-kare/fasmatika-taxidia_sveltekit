@@ -15,12 +15,12 @@
 
 <style>
 	.wrapper {
-		position: fixed;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		inset: 0;
-
+		min-height: 100vh;
+		min-width: 100vw;
+		overflow-y: scroll;
 		z-index: 2;
 	}
 </style>

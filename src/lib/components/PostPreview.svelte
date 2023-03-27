@@ -3,7 +3,6 @@
 	import { goto } from '$app/navigation';
 	export let title;
 	export let img;
-	export let content;
 	export let username;
 	export let usernameImg;
 	export let createdAt;
@@ -11,13 +10,13 @@
 	function getPost() {
 		goto(`/post/${id}`);
 	}
-	const ransomColor = getRandomColor();
+	const randomColor = getRandomColor();
 	const profileImg = usernameImg ? usernameImg : 'defaultUser.jpg';
 </script>
 
 <div class="post" on:click={getPost} on:keypress={getPost}>
 	<div id="title">
-		<h1 style:color={ransomColor}>
+		<h1 style:color={randomColor}>
 			<span>|</span>
 			{title}
 			<span>|</span>
@@ -26,7 +25,7 @@
 
 	<img src={`/images/posts/${img}`} alt={title} />
 	<div class="details">
-		<p id="date" style:color={ransomColor}>
+		<p id="date" style:color={randomColor}>
 			{new Date(createdAt).toLocaleDateString('en-US', {
 				year: 'numeric',
 				month: 'long',
@@ -35,7 +34,7 @@
 				minute: 'numeric'
 			})}
 		</p>
-		<p id="author" style:color={ransomColor}>{username}</p>
+		<p id="author" style:color={randomColor}>{username}</p>
 		<img id="profileImg" src={`/images/users/${profileImg}`} alt={username} />
 	</div>
 </div>
