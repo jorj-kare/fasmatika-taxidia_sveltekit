@@ -1,6 +1,7 @@
 <script>
 	import Modal from '$components/Modal.svelte';
-	import CloseBtn from '$components/account/CloseBtn.svelte';
+
+	import navStore from '$lib/stores/nav.js';
 	import Form from '$components/form/Form.svelte';
 	import Field from '$components/form/Field.svelte';
 	import Button from '$components/form/Button.svelte';
@@ -14,7 +15,8 @@
 	import { onMount } from 'svelte';
 
 	let backgroundColor;
-
+	$navStore.type = 'btnClose';
+	$navStore.page = 'account';
 	async function signUp(e) {
 		try {
 			const { username, password, confirmPassword, profileImg } = e.detail;
@@ -70,6 +72,4 @@
 
 		<Button color={backgroundColor} type="submit">Δημιουργία</Button>
 	</Form>
-
-	<CloseBtn page="account" />
 </Modal>

@@ -3,6 +3,7 @@
 	import Post from '$components/Post.svelte';
 
 	export let data;
+	$navStore.type = 'nav';
 </script>
 
 <Headers />

@@ -1,6 +1,6 @@
 <script>
 	import notificationsStore from '$stores/notifications';
-	import CloseBtn from '$components/account/CloseBtn.svelte';
+	import navStore from '$lib/stores/nav.js';
 	import Modal from '$components/Modal.svelte';
 	import Field from '$components/form/Field.svelte';
 	import Form from '$components/form/Form.svelte';
@@ -11,6 +11,8 @@
 	import { goto } from '$app/navigation';
 
 	let backgroundColor;
+	$navStore.type = 'btnClose';
+	$navStore.page = 'account';
 
 	async function login(e) {
 		try {
@@ -53,6 +55,4 @@
 		<Field label="Κωδικός" name="password" validate={isFieldEmpty} />
 		<Button type="submit" color={backgroundColor}>Σύνδεση</Button>
 	</Form>
-
-	<CloseBtn page="account" />
 </Modal>

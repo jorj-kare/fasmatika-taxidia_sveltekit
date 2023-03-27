@@ -2,9 +2,9 @@
 	import AccountBtn from '$components/account/AccountButtons.svelte';
 	import { fade } from 'svelte/transition';
 	import { goto } from '$app/navigation';
-
+	import navStore from '$lib/stores/nav.js';
 	export let data;
-
+	$navStore.type = 'nav';
 	async function logout() {
 		await fetch('/api/account/logout', {
 			method: 'POST',
