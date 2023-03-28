@@ -14,8 +14,18 @@ export const GET = async ({ params }) => {
 };
 export const PATCH = async ({ params, request }) => {
 	try {
-		const data = await request.json();
+		let data = await request.json();
 
+		if (data.stars) {
+			if (data.action === 'push') {
+				data = { $push: { stars: data.stars } };
+			}
+			if (data.action === 'remove') {
+				{
+					data = { $pull: { stars: data.stars } };
+				}
+			}
+		}
 		const post = await Post.findByIdAndUpdate(params.id, data, {
 			new: true,
 			runValidators: true
