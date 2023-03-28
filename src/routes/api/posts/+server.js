@@ -5,7 +5,7 @@ import fs from 'fs';
 import { nanoid } from 'nanoid';
 
 export const GET = async () => {
-	const posts = await Post.find().populate('author');
+	const posts = await Post.find().populate('author').sort({ createdAt: -1 });
 	return json(
 		{ data: posts },
 		{
