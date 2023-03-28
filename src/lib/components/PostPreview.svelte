@@ -1,6 +1,8 @@
 <script>
 	import getRandomColor from '$lib/utils/getRandomColor';
 	import { goto, invalidateAll } from '$app/navigation';
+	import Stars from '$lib/components/Stars.svelte';
+
 	export let title;
 	export let img;
 	export let username;
@@ -8,6 +10,10 @@
 	export let createdAt;
 	export let id;
 	export let editable = false;
+	export let stars = 0;
+
+	const randomColor = getRandomColor();
+	const profileImg = usernameImg ? usernameImg : 'defaultUser.jpg';
 
 	function getPost() {
 		goto(`/post/${id}`);
@@ -20,40 +26,36 @@
 		});
 		invalidateAll();
 	}
-
-	const randomColor = getRandomColor();
-	const profileImg = usernameImg ? usernameImg : 'defaultUser.jpg';
 </script>
 
-<div class="wrapper">
+<div class="wrapper" style:color={randomColor}>
 	<div class="post" on:click={getPost} on:keypress={getPost}>
 		<div id="title">
-			<h1 style:color={randomColor}>
+			<h1>
 				<span>|</span>
 				{title}
 				<span>|</span>
 			</h1>
 		</div>
-
 		<img src={`/images/posts/${img}`} alt={title} />
-		<div class="{!editable ? 'detailsV1' : 'detailsV2'} details">
-			<p id="date" style:color={randomColor}>
-				{new Date(createdAt).toLocaleDateString('en-US', {
-					year: 'numeric',
-					month: 'long',
-					day: 'numeric',
-					hour: 'numeric',
-					minute: 'numeric'
-				})}
-			</p>
-			{#if !editable}
-				<p id="author" style:color={randomColor}>{username}</p>
-				<img
-					id="profileImg"
-					src={`/images/users/${profileImg}`}
-					alt={username} />
-			{/if}
-		</div>
+	</div>
+	<div class="{!editable ? 'details--1' : 'details--2'} details">
+		{#if !editable}
+			<div id="stars"><Stars {stars} {username} {id} /></div>
+		{/if}
+		<p id="date">
+			{new Date(createdAt).toLocaleDateString('en-US', {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric',
+				hour: 'numeric',
+				minute: 'numeric'
+			})}
+		</p>
+		{#if !editable}
+			<p id="author">{username}</p>
+			<img id="profileImg" src={`/images/users/${profileImg}`} alt={username} />
+		{/if}
 	</div>
 	{#if editable}
 		<button id="btnDelete" on:click={deletePost}>Delete post</button>
@@ -83,8 +85,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1.5rem;
-		color: $color-black;
-
+		color: inherit;
 		img {
 			width: 100%;
 			height: auto;
@@ -96,7 +97,6 @@
 				filter: saturate(3);
 			}
 		}
-
 		#title {
 			display: flex;
 			align-items: center;
@@ -110,39 +110,44 @@
 				font-size: 5rem;
 			}
 		}
-		.detailsV2 {
-			display: flex;
-			justify-content: center;
+	}
+	.details--2 {
+		display: flex;
+		justify-content: center;
+	}
+	.details--1 {
+		display: grid;
+		gap: 0.5rem;
+		justify-items: flex-end;
+		grid-template-areas:
+			'star date date date img'
+			'star auth auth auth img';
+	}
+	.details {
+		position: relative;
+		font-size: 2.5rem;
+		letter-spacing: 0.2rem;
+		font-weight: 400;
+		#stars {
+			grid-area: star;
 		}
-		.detailsV1 {
-			position: relative;
-			display: grid;
-			gap: 0.5rem;
-			justify-items: flex-end;
-			grid-template-areas:
-				'date date date img'
-				'auth auth auth img';
+
+		#date {
+			grid-area: date;
+			justify-self: flex-end;
 		}
-		.details {
-			font-size: 2.5rem;
-			letter-spacing: 0.2rem;
-			font-weight: 400;
-			#date {
-				grid-area: date;
-				justify-self: flex-end;
-			}
-			#author {
-				grid-area: auth;
-				justify-self: flex-end;
-				text-transform: capitalize;
-			}
-			#profileImg {
-				grid-area: img;
-				justify-self: center;
-				width: 7rem;
-				height: 7rem;
-				border-radius: 50px;
-			}
+		#author {
+			grid-area: auth;
+			justify-self: flex-end;
+			text-transform: capitalize;
+		}
+		#profileImg {
+			grid-area: img;
+			justify-self: center;
+			width: 7rem;
+			height: 7rem;
+			border-radius: 50px;
+			object-fit: cover;
 		}
 	}
 </style>

@@ -9,12 +9,13 @@
 <Headers />
 
 <section class="posts">
-	{#each data.posts.data as { _id, title, img, author, createdAt }}
+	{#each data.posts.data as { _id, title, img, author, createdAt, stars }}
 		<PostPreview
 			{title}
 			id={_id}
 			{img}
 			{createdAt}
+			{stars}
 			username={author?.username}
 			usernameImg={author?.profileImg} />
 	{/each}
