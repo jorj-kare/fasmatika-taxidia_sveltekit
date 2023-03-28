@@ -22,9 +22,11 @@
 
 <style lang="scss">
 	.posts {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		background-color: $color-black;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(60rem, 1fr));
+		padding: 15rem 10rem;
+		min-height: 100vh;
+		gap: 10rem;
+		background-color: $color-white;
 	}
 </style>
