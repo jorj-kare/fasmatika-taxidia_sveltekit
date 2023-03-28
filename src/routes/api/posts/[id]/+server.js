@@ -5,7 +5,7 @@ import fs from 'fs';
 export const GET = async ({ params }) => {
 	try {
 		const post = await Post.findById(params.id).populate('author');
-		if (!post) throw error(404, 'No post found with this id.');
+		if (!post) throw error(404, 'Δεν βρέθηκε καταχώρηση με αυτο το id');
 		return json({ data: { post } }, { status: 200, statusText: 'success' });
 	} catch (err) {
 		const { msg, statusCode } = checkError(err);
@@ -31,7 +31,7 @@ export const PATCH = async ({ params, request }) => {
 			runValidators: true
 		});
 
-		if (!post) throw error(404, 'No post found with this id. ');
+		if (!post) throw error(404, 'Δεν βρέθηκε καταχώρηση με αυτο το id');
 		return json({ data: { post } }, { status: 200, statusText: 'success' });
 	} catch (err) {
 		const { msg, statusCode } = checkError(err);

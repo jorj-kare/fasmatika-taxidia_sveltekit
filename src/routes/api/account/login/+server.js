@@ -8,13 +8,13 @@ export const POST = async ({ cookies, request }) => {
 	const password = formData.get('password')?.toString();
 
 	if (!username || !password) {
-		throw error(404, 'Please provide username and password');
+		throw error(404, 'Τα πεδία όνομα χρήστη και κωδικός είναι υποχρεωτικά');
 	}
 
 	const user = await User.findOne({ username }).select('+password');
 
 	if (!user || !(await user?.isPasswordCorrect(password, user.password))) {
-		throw error(404, 'Incorrect username or password');
+		throw error(404, 'Λάθος όνομα χρήστη ή κωδικός');
 	}
 	user.password = '';
 

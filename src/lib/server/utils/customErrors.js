@@ -1,7 +1,7 @@
 import { MODE } from '$env/static/private';
 
 export function checkError(error) {
-	let msg = 'Something went wrong please try again.';
+	let msg = 'Κάτι πήγε στραβά, παρακαλώ προσπαθήστε ξανά.';
 	let statusCode = 500;
 	if (error.code === 11000) {
 		const [key, value] = Object.entries(error?.keyValue)[0];
@@ -10,19 +10,19 @@ export function checkError(error) {
 	}
 	if (error.name === 'ValidationError') {
 		const errors = Object.values(error.errors).map((el) => el.message);
-		msg = 'Invalid input data: \n ' + errors.join('\n');
+		msg = 'Mη έγκυρη εισαγωγή δεδομένων: \n ' + errors.join('\n');
 		statusCode = 400;
 	}
 	if (error.name === 'CastError') {
-		msg = `Invalid ${error.path}: ${error.value}.`;
+		msg = `Μη ´έγκυρο ${error.path}: ${error.value}.`;
 		statusCode = 400;
 	}
-	if (error.name === 'JsonWebTokenError') {
-		msg = 'Invalid token please try again';
-		statusCode = 401;
-	}
-	if (error.name === 'TokenExpiredError') {
-		msg = 'Your token has expired please try again';
+
+	if (
+		error.name === 'TokenExpiredError' ||
+		error.name === 'JsonWebTokenError'
+	) {
+		msg = 'Κάτι πήγε στραβά, παρακαλώ συνδεθείτε ξανά';
 		statusCode = 401;
 	}
 	if (MODE === 'development') {

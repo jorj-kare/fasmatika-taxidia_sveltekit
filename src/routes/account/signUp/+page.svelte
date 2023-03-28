@@ -57,7 +57,11 @@
 
 <Modal opacity={1} {backgroundColor}>
 	<Form on:submit={signUp}>
-		<Field label="Φωτογραφία προφίλ" name="profileImg" type="file" />
+		<Field
+			label="Φωτογραφία προφίλ"
+			name="profileImg"
+			type="file"
+			validate={isFieldEmpty} />
 		<Field label="Όνομα" name="username" validate={isFieldEmpty} />
 		<Field
 			label="Κωδικός"

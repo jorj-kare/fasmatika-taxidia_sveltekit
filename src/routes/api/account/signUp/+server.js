@@ -25,7 +25,7 @@ export const POST = async ({ request }) => {
 			confirmPassword: formData.get('confirmPassword'),
 			profileImg: filename
 		});
-		if (!newUser) throw error(400, 'Something went wrong please try again');
+		if (!newUser) throw error(400, 'Κάτι πήγε στραβά, προσπαθήστε αργότερα.');
 
 		return json(
 			{

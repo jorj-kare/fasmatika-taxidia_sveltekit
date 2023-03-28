@@ -32,6 +32,6 @@ export const handle = async ({ event, resolve }) => {
 export const handleError = ({ error }) => {
 	if (MODE === 'development') console.log(error);
 	return {
-		message: 'An unexpected error has occurred'
+		message: 'Ουπς κάτι πήγε στραβά'
 	};
 };
