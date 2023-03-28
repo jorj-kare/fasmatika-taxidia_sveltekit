@@ -20,6 +20,9 @@ const postSchema = new Schema({
 		type: Date,
 		default: Date.now(),
 		immutable: true
+	},
+	stars: {
+		type: [String]
 	}
 });
 
