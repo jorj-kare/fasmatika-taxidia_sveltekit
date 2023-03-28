@@ -1,7 +1,7 @@
 import { json, error } from '@sveltejs/kit';
 import Post from '$lib/server/db/models/post';
 import { checkError } from '$lib/server/utils/customErrors';
-
+import fs from 'fs';
 export const GET = async ({ params }) => {
 	try {
 		const post = await Post.findById(params.id).populate('author');
@@ -30,13 +30,21 @@ export const PATCH = async ({ params, request }) => {
 };
 
 export const DELETE = async ({ params }) => {
-	const post = await Post.findByIdAndDelete(params.id);
-	if (!post) throw error(404, 'No post found with this id.');
-
-	return json(
-		{
-			data: null
-		},
-		{ status: 204, statusText: 'success' }
-	);
+	try {
+		const post = await Post.findById(params.id);
+		if (!post) throw error(404, 'No post found with this id.');
+		await post.deleteOne();
+		if (!fs.existsSync(`static/images/posts/${post.img}`))
+			throw error(400, 'Filed not found');
+		fs.unlinkSync(`static/images/posts/${post.img}`);
+		return json(
+			{
+				data: null
+			},
+			{ status: 200, statusText: 'success' }
+		);
+	} catch (err) {
+		const { msg, statusCode } = checkError(err);
+		throw error(statusCode, msg);
+	}
 };
