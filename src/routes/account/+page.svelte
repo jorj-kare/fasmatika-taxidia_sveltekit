@@ -19,10 +19,13 @@
 
 <div class="account" transition:fade={{ duration: 800 }}>
 	{#if data.user}
+		<AccountBtn href={`/account/myPosts/${data.user.id}`}
+			>Οι καταχωρήσεις μου</AccountBtn>
 		<AccountBtn href="#" on:click={logout}>Αποσύνδεση</AccountBtn>
 	{:else}
-		<AccountBtn href="/account/login">Σύνδεση</AccountBtn>{/if}
-	<AccountBtn href="/account/signUp">Δημιουργία λογαριασμού</AccountBtn>
+		<AccountBtn href="/account/login">Σύνδεση</AccountBtn>
+		<AccountBtn href="/account/signUp">Δημιουργία λογαριασμού</AccountBtn>
+	{/if}
 </div>
 
 <style lang="scss">
