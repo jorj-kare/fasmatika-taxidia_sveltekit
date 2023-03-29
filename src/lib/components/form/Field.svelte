@@ -94,7 +94,7 @@
 						on:click={() => {
 							fileInput.value = '';
 							imgSrc = '';
-							$formStore.values.profileImg = undefined;
+							delete $formStore.values.profileImg;
 						}}><GoTrashcan /></button>
 				</div>
 			{/if}
