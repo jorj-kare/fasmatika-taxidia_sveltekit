@@ -5,9 +5,15 @@ const userSchema = new Schema({
 	username: {
 		type: String,
 		unique: true,
-		required: [true, 'Username field is required.'],
-		minlength: [3, 'Username must contain minimum 3 characters.'],
-		maxlength: [20, 'Username length must not be more than 20 characters.'],
+		required: [true, 'Το πεδίο όνομα χρήστη είναι υποχρεωτικό.'],
+		minlength: [
+			3,
+			'Το όνομα χρήστη πρέπει να περιέχει τουλάχιστον 5 χαρακτήρες.'
+		],
+		maxlength: [
+			20,
+			'Το όνομα χρήστη πρέπει να μην ξεπερνάει τους 20 χαρακτήρες.'
+		],
 		trim: true
 	},
 	role: {
@@ -17,25 +23,25 @@ const userSchema = new Schema({
 	},
 	password: {
 		type: String,
-		required: [true, 'Password field is required.'],
+		required: [true, 'Το πεδίο κωδικός είναι υποχρεωτικό.'],
 		trim: true,
-		minlength: [5, 'You must provide a password tha contains at least 5 characters.'],
+		minlength: [5, 'Ο κωδικός πρέπει να περιέχει τουλάχιστον 5 χαρακτήρες.'],
 		select: false
 	},
 	confirmPassword: {
 		type: String,
-		required: [true, 'Please confirm your password.'],
 		trim: true,
 		select: false,
 		validate: {
 			validator: function (val) {
 				return val === this.password;
 			},
-			message: 'Passwords are not the same'
+			message: 'Οι κωδικοί δεν είναι ίδιοι.'
 		}
 	},
 	profileImg: {
-		type: String
+		type: String,
+		required: [true, 'Το πεδίο φωτογραφία χρήστη είναι υποχρεωτικό.']
 	},
 	posts: {
 		type: Schema.Types.ObjectId,
@@ -49,7 +55,10 @@ userSchema.pre('save', async function (next) {
 	this.confirmPassword = undefined;
 	next();
 });
-userSchema.methods.isPasswordCorrect = async function (candidatePassword, password) {
+userSchema.methods.isPasswordCorrect = async function (
+	candidatePassword,
+	password
+) {
 	return await bcrypt.compare(candidatePassword, password);
 };
 const User = model('User', userSchema);

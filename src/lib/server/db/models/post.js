@@ -3,11 +3,11 @@ import { model, Schema } from 'mongoose';
 const postSchema = new Schema({
 	title: {
 		type: String,
-		required: [true, 'Please provide a title']
+		required: [true, 'Το πεδίο τίτλος είναι υποχρεωτικό.']
 	},
 	content: {
 		type: String,
-		required: [true, 'You need to provide content']
+		required: [true, 'Το πεδίο περιεχόμενο είναι υποχρεωτικό.']
 	},
 	img: {
 		type: String
