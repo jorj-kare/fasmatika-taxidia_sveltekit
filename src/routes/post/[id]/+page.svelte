@@ -1,16 +1,17 @@
 <script>
 	import navStore from '$lib/stores/nav.js';
 	import Modal from '$components/Modal.svelte';
+	import { PUBLIC_CLOUDINARY_URL } from '$env/static/public';
 	export let data;
 	const post = data.data.post;
 	$navStore.type = 'closeBtn';
 	$navStore.page = '';
 </script>
 
-<Modal opacity="1" backgroundColor="#03001c">
+<Modal backgroundColor="#03001c">
 	<div class="wrapper">
 		<figure>
-			<img src={`/images/posts/${post.img}`} alt={post.title} />
+			<img src={PUBLIC_CLOUDINARY_URL + post.img} alt={post.title} />
 		</figure>
 
 		<div class="title">
@@ -21,8 +22,9 @@
 		<p class="content">{post.content}</p>
 		<div class="author">
 			<img
-				src={`/images/users/${post.author.profileImg}`}
-				alt={`profile image of ${post.author.username}`} />
+				src={PUBLIC_CLOUDINARY_URL + post.author.profileImg}
+				alt={`profile image of ${post.author.username}`}
+			/>
 			<p>{post.author.username}</p>
 			<p id="date">
 				{new Date(post.createdAt).toLocaleDateString('en-US', {
@@ -48,7 +50,7 @@
 		background-color: $color-black;
 
 		figure {
-			width: 100rem;
+			width: 101rem;
 			height: 70rem;
 			img {
 				border-radius: 10px;
@@ -62,11 +64,6 @@
 			display: flex;
 			align-items: center;
 			gap: 4rem;
-
-			span {
-				font-size: 7rem;
-				font-weight: 500;
-			}
 		}
 		h1 {
 			font-size: 6rem;

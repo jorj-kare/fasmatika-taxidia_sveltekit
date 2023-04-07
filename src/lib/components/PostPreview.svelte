@@ -1,8 +1,9 @@
 <script>
+	import Stars from '$lib/components/Stars.svelte';
 	import getRandomColor from '$lib/utils/getRandomColor';
 	import { goto, invalidateAll } from '$app/navigation';
-	import Stars from '$lib/components/Stars.svelte';
-
+	import { PUBLIC_CLOUDINARY_URL } from '$env/static/public';
+	import { cloudinary } from '$lib/utils/cloudinary.js';
 	export let title;
 	export let img;
 	export let username;
@@ -24,6 +25,13 @@
 		await fetch(`/api/posts/${id}`, {
 			method: 'DELETE'
 		});
+
+		await cloudinary({
+			publicId: img.split('.')[0],
+			action: 'destroy',
+			folder: 'posts'
+		});
+
 		invalidateAll();
 	}
 </script>
@@ -37,7 +45,7 @@
 				<span>|</span>
 			</h1>
 		</div>
-		<img src={`/images/posts/${img}`} alt={title} />
+		<img src={PUBLIC_CLOUDINARY_URL + img} alt={title} />
 	</div>
 	<div class="{!editable ? 'details--1' : 'details--2'} details">
 		{#if !editable}
@@ -54,7 +62,7 @@
 		</p>
 		{#if !editable}
 			<p id="author">{username}</p>
-			<img id="profileImg" src={`/images/users/${profileImg}`} alt={username} />
+			<img id="profileImg" src={PUBLIC_CLOUDINARY_URL + profileImg} alt={username} />
 		{/if}
 	</div>
 	{#if editable}

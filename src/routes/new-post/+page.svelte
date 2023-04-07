@@ -1,4 +1,5 @@
 <script>
+	import { cloudinary } from '$lib/utils/cloudinary.js';
 	import { Circle2 } from 'svelte-loading-spinners';
 	import Modal from '$components/Modal.svelte';
 	import GoTrashcan from 'svelte-icons/go/GoTrashcan.svelte';
@@ -6,6 +7,7 @@
 	import notificationsStore from '$lib/stores/notifications.js';
 	import { labelShine, stopLabelShine } from '$lib/utils/inputFocus.js';
 	import { goto } from '$app/navigation';
+	import { nanoid } from 'nanoid';
 
 	export let data;
 
@@ -14,7 +16,7 @@
 	let imgSrc;
 	let fileInput;
 	let file;
-	let submit;
+	let submitting = false;
 
 	export const snapshot = {
 		capture: () => {
@@ -38,11 +40,20 @@
 			if (!data.user) {
 				throw new Error('Πρέπει να συνδεθείς πρώτα!');
 			}
-			submit = true;
+			submitting = true;
+			const resCloud = await cloudinary({
+				publicId: nanoid(),
+				file: file,
+				action: 'upload',
+				folder: 'posts'
+			});
+			if (!resCloud.public_id) throw new Error('Μη έγκυρη μορφή αρχείου: φωτογραφία');
+
+			const filename = `${resCloud.public_id}.${resCloud.format}`;
 			const form = new FormData();
 			form.append('title', title);
 			form.append('content', content);
-			form.append('img', file);
+			form.append('img', filename);
 			form.append('author', data.user.id);
 
 			const res = await fetch('/api/posts', {
@@ -51,7 +62,15 @@
 			});
 			const resJson = res.json();
 
-			if (!res.ok) throw new Error(resJson.message);
+			if (!res.ok) {
+				await cloudinary({
+					publicId: 'posts/' + filename,
+					action: 'destroy',
+					folder: 'posts'
+				});
+
+				throw new Error(resJson.message);
+			}
 
 			$notificationsStore.type = 'success';
 			$notificationsStore.msg = 'Το ποστ έχει αποθηκευτεί με επιτυχία';
@@ -65,6 +84,7 @@
 		} catch (err) {
 			$notificationsStore.type = 'error';
 			$notificationsStore.msg = err.message;
+			submitting = false;
 		}
 	}
 
@@ -83,7 +103,7 @@
 </script>
 
 <section class="newPost">
-	{#if submit}
+	{#if submitting}
 		<Modal>
 			<div class="spinnerWrapper">
 				<Circle2
@@ -91,7 +111,8 @@
 					colorOuter=" #1f4690"
 					colorCenter="#975c8d"
 					colorInner=" #86c8bc"
-					unit="px" />
+					unit="px"
+				/>
 			</div>
 		</Modal>
 	{/if}
@@ -102,7 +123,8 @@
 			bind:value={title}
 			on:focus={labelShine}
 			on:blur={stopLabelShine}
-			required />
+			required
+		/>
 		<label id="contentLabel" for="contentInput">Περιεχόμενο</label>
 		<textarea
 			id="contentInput"
@@ -110,7 +132,8 @@
 			on:focus={labelShine}
 			on:blur={stopLabelShine}
 			cols="5"
-			required />
+			required
+		/>
 		<label id="imageLabel" for="imageInput">Φωτογραφία</label>
 		{#if !imgSrc}
 			<input
@@ -122,12 +145,13 @@
 				type="file"
 				accept="image/*"
 				title="Πατήστε εδω για να επιλεξέτε φωτογραφία"
-				required />
+			/>
 			<button
 				id="btnUploadImg"
 				on:click|preventDefault={() => {
 					fileInput.click();
-				}}>
+				}}
+			>
 				<IoMdImages />
 			</button>
 		{:else}
@@ -135,7 +159,8 @@
 				<img src={imgSrc} alt="preview" />
 				<button on:click={clearImg}
 					><div id="icon-trash"><GoTrashcan /></div>
-					Αφαίρεση</button>
+					Αφαίρεση</button
+				>
 			</div>
 		{/if}
 		<button id="btnSubmit" type="submit"><span> Αποθήκευση</span></button>

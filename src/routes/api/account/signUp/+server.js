@@ -10,20 +10,19 @@ export const POST = async ({ request }) => {
 		const username = formData.get('username');
 
 		// Upload image
-		let filename;
 		const file = formData.get('profileImg');
 
-		if (file instanceof Object || file?.name) {
-			filename = `${username}.${file.type.split('/')[1]}`;
-			const buffer = Buffer.from(await file.arrayBuffer());
-			fs.writeFileSync(`static/images/users/${filename}`, buffer, 'base64');
-		}
+		// if (file instanceof Object || file?.name) {
+		// 	filename = `${username}.${file.type.split('/')[1]}`;
+		// 	const buffer = Buffer.from(await file.arrayBuffer());
+		// 	fs.writeFileSync(`/images/users/${filename}`, buffer, 'base64');
+		// }
 		// create user
 		const newUser = await User.create({
 			username,
 			password: formData.get('password'),
 			confirmPassword: formData.get('confirmPassword'),
-			profileImg: filename
+			profileImg: file
 		});
 		if (!newUser) throw error(400, 'Κάτι πήγε στραβά, προσπαθήστε αργότερα.');
 
