@@ -49,7 +49,7 @@
 	});
 </script>
 
-<Modal opacity={1} {backgroundColor}>
+<Modal {backgroundColor}>
 	<Form on:submit={login}>
 		<Field label="Όνομα χρήστη" name="username" validate={isFieldEmpty} />
 		<Field label="Κωδικός" name="password" validate={isFieldEmpty} />

@@ -17,14 +17,15 @@
 			{createdAt}
 			{stars}
 			username={author?.username}
-			usernameImg={author?.profileImg} />
+			usernameImg={author?.profileImg}
+		/>
 	{/each}
 </section>
 
 <style lang="scss">
 	.posts {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(60rem, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(60rem, 1fr));
 		padding: 15rem 10rem;
 		min-height: 100vh;
 		gap: 10rem;

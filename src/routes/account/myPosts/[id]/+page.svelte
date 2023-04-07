@@ -3,8 +3,8 @@
 	import getRandomColor from '$lib/utils/getRandomColor';
 	import navStore from '$lib/stores/nav.js';
 	import GiPeriscope from 'svelte-icons/gi/GiPeriscope.svelte';
-	import GoTelescope from 'svelte-icons/go/GoTelescope.svelte';
 	import { onDestroy } from 'svelte';
+
 	export let data;
 	$navStore.mode = 'light';
 	$navStore.type = 'btnClose';
@@ -26,12 +26,11 @@
 				{img}
 				{createdAt}
 				username={data.user.username}
-				usernameImg={data.user.profileImg} />
+				usernameImg={data.user.profileImg}
+			/>
 		{/each}
 	{:else}
-		<div
-			class="wrapper"
-			style={`border-color:${randomColor};color:${randomColor}`}>
+		<div class="wrapper" style={`border-color:${randomColor};color:${randomColor}`}>
 			<div id="icon-scope"><GiPeriscope /></div>
 			<h1>Δεν βρέθηκε καμία καταχώρηση</h1>
 		</div>
@@ -41,7 +40,7 @@
 <style lang="scss">
 	.posts {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(60rem, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
 		padding: 15rem 10rem;
 		min-height: 100vh;
 		gap: 10rem;

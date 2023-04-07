@@ -76,9 +76,9 @@
 
 <Modal {backgroundColor}>
 	<Form on:submit={signUp}>
-		<Field label="Φωτογραφία προφίλ" name="profileImg" type="file" />
+		<Field label="Φωτογραφία προφίλ" name="profileImg" type="file" validate={isFieldEmpty} />
 		<Field label="Όνομα" name="username" validate={isFieldEmpty} />
-		<Field label="Κωδικός" name="password" type="password" />
+		<Field label="Κωδικός" name="password" type="password" validate={isFieldEmpty} />
 		<Field label="Επαλήθευση κωδικού" name="confirmPassword" type="password" />
 		<Button color={backgroundColor} type="submit" disabled={submitting}>Δημιουργία</Button>
 	</Form>

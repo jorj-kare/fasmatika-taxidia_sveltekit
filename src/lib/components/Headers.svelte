@@ -2,15 +2,14 @@
 	import { fade } from 'svelte/transition';
 </script>
 
-<header transition:fade|local={{ duration: 800 }}>
+<header transition:fade|local={{ duration: 600 }}>
 	<h1>
 		ΗΜΕΡΟΛΟΓΙΑ ΦΑ<span>ΝΤΑ</span>ΣΜΑΤΙΚΩΝ ΤΑΞΙΔΙΩΝ
 	</h1>
 
 	<p>
-		Ημερολόγια φανταστικά, διηγήσεις άχρονες για φασματικές περιπλανήσεις σε
-		μέρη στατικά κ'απόμακρα. Αποπλανημένα φά<span>ντά</span>σματα καθώς
-		καθρεφτίζονται σε γαλήνια, σκοτεινά νερά.
+		Ημερολόγια φανταστικά, διηγήσεις άχρονες για φασματικές περιπλανήσεις σε μέρη στατικά
+		κ'απόμακρα. Αποπλανημένα φά<span>ντά</span>σματα καθώς καθρεφτίζονται σε γαλήνια, σκοτεινά νερά.
 	</p>
 </header>
 
@@ -20,10 +19,7 @@
 		justify-content: center;
 		justify-items: center;
 		height: 100vh;
-		background-image: linear-gradient(
-				rgba(32, 0, 82, 0.719),
-				rgba(1, 17, 107, 0.65)
-			),
+		background-image: linear-gradient(rgba(32, 0, 82, 0.719), rgba(1, 17, 107, 0.65)),
 			url('/images/backg.jpg');
 		background-size: cover;
 		background-position: 50% 16%;
