@@ -1,28 +1,15 @@
 import { error, json } from '@sveltejs/kit';
 import User from '$lib/server/db/models/user';
 import { checkError } from '$lib/server/utils/customErrors';
-import fs from 'fs';
 
 export const POST = async ({ request }) => {
 	try {
-		const formData = await request.formData();
-
-		const username = formData.get('username');
-
-		// Upload image
-		const file = formData.get('profileImg');
-
-		// if (file instanceof Object || file?.name) {
-		// 	filename = `${username}.${file.type.split('/')[1]}`;
-		// 	const buffer = Buffer.from(await file.arrayBuffer());
-		// 	fs.writeFileSync(`/images/users/${filename}`, buffer, 'base64');
-		// }
-		// create user
+		const data = await request.json();
 		const newUser = await User.create({
-			username,
-			password: formData.get('password'),
-			confirmPassword: formData.get('confirmPassword'),
-			profileImg: file
+			username: data.username,
+			password: data.password,
+			confirmPassword: data.confirmPassword,
+			profileImg: data.profileImg
 		});
 		if (!newUser) throw error(400, 'Κάτι πήγε στραβά, προσπαθήστε αργότερα.');
 

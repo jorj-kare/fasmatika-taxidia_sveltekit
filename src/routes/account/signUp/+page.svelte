@@ -31,16 +31,16 @@
 			if (!resCloud.public_id) throw new Error('Μη έγκυρη μορφή αρχείου: φωτογραφία χρήστη');
 
 			const filename = `${resCloud.public_id}.${resCloud.format}`;
-
-			const form = new FormData();
-			form.append('username', username);
-			form.append('password', password);
-			form.append('confirmPassword', confirmPassword);
-			form.append('profileImg', filename);
+			const data = {
+				profileImg: filename,
+				username,
+				password,
+				confirmPassword
+			};
 
 			const res = await fetch('/api/account/signUp', {
 				method: 'Post',
-				body: form
+				body: JSON.stringify(data)
 			});
 
 			const resJson = await res.json();
@@ -76,10 +76,15 @@
 
 <Modal {backgroundColor}>
 	<Form on:submit={signUp}>
-		<Field label="Φωτογραφία προφίλ" name="profileImg" type="file" validate={isFieldEmpty} />
+		<Field label="Φωτογραφία προφίλ" name="profileImg" type="file" />
 		<Field label="Όνομα" name="username" validate={isFieldEmpty} />
 		<Field label="Κωδικός" name="password" type="password" validate={isFieldEmpty} />
-		<Field label="Επαλήθευση κωδικού" name="confirmPassword" type="password" />
+		<Field
+			label="Επαλήθευση κωδικού"
+			name="confirmPassword"
+			type="password"
+			validate={isFieldEmpty}
+		/>
 		<Button color={backgroundColor} type="submit" disabled={submitting}>Δημιουργία</Button>
 	</Form>
 </Modal>
