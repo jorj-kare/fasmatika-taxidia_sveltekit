@@ -40,7 +40,6 @@
 			if (!data.user) {
 				throw new Error('Πρέπει να συνδεθείς πρώτα!');
 			}
-			submitting = true;
 			const resCloud = await cloudinary({
 				publicId: nanoid(),
 				file: file,
@@ -49,20 +48,23 @@
 			});
 			if (!resCloud.public_id) throw new Error('Μη έγκυρη μορφή αρχείου: φωτογραφία');
 
+			submitting = true;
 			const filename = `${resCloud.public_id}.${resCloud.format}`;
-			const form = new FormData();
-			form.append('title', title);
-			form.append('content', content);
-			form.append('img', filename);
-			form.append('author', data.user.id);
+			const post = {
+				title,
+				content,
+				img: filename,
+				author: data.user.id
+			};
 
 			const res = await fetch('/api/posts', {
 				method: 'Post',
-				body: form
+				body: JSON.stringify(post)
 			});
-			const resJson = res.json();
+			const resJson = await res.json();
 
 			if (!res.ok) {
+				submitting = false;
 				await cloudinary({
 					publicId: 'posts/' + filename,
 					action: 'destroy',
@@ -84,7 +86,6 @@
 		} catch (err) {
 			$notificationsStore.type = 'error';
 			$notificationsStore.msg = err.message;
-			submitting = false;
 		}
 	}
 
@@ -118,13 +119,7 @@
 	{/if}
 	<form on:submit|preventDefault={onsubmit}>
 		<label id="titleLabel" for="titleInput">Τίτλος </label>
-		<textarea
-			id="titleInput"
-			bind:value={title}
-			on:focus={labelShine}
-			on:blur={stopLabelShine}
-			required
-		/>
+		<textarea id="titleInput" bind:value={title} on:focus={labelShine} on:blur={stopLabelShine} />
 		<label id="contentLabel" for="contentInput">Περιεχόμενο</label>
 		<textarea
 			id="contentInput"

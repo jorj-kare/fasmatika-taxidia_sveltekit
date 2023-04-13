@@ -15,13 +15,13 @@ export const GET = async () => {
 
 export const POST = async ({ request }) => {
 	try {
-		const formData = await request.formData();
+		const post = await request.json();
 
 		const newPost = await Post.create({
-			title: formData.get('title'),
-			content: formData.get('content'),
-			img: formData.get('img'),
-			author: formData.get('author')
+			title: post.title,
+			content: post.content,
+			img: post.img,
+			author: post.author
 		});
 		return json(
 			{ data: { newPost } },
