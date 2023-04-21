@@ -52,7 +52,7 @@
 <Modal {backgroundColor}>
 	<Form on:submit={login}>
 		<Field label="Όνομα χρήστη" name="username" validate={isFieldEmpty} />
-		<Field label="Κωδικός" name="password" validate={isFieldEmpty} />
+		<Field label="Κωδικός" name="password" type="password" validate={isFieldEmpty} />
 		<Button type="submit" color={backgroundColor}>Σύνδεση</Button>
 	</Form>
 </Modal>
