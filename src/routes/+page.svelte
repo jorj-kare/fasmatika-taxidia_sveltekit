@@ -8,7 +8,7 @@
 
 <Headers />
 
-<section class="posts">
+<section class="posts grid-layout">
 	{#each data.posts.data as { _id, title, img, author, createdAt, stars }}
 		<PostPreview
 			{title}
@@ -24,11 +24,8 @@
 
 <style lang="scss">
 	.posts {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(60rem, 1fr));
-		padding: 15rem 10rem;
 		min-height: 100vh;
-		gap: 10rem;
 		background-color: $color-white;
+		padding-bottom: 20rem;
 	}
 </style>

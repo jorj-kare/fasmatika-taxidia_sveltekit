@@ -40,8 +40,5 @@
 		&:hover {
 			box-shadow: 0 0 8px $color-white;
 		}
-
-		#icon-spin {
-		}
 	}
 </style>

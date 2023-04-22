@@ -40,6 +40,7 @@
 			if (!data.user) {
 				throw new Error('Πρέπει να συνδεθείς πρώτα!');
 			}
+			submitting = true;
 			const resCloud = await cloudinary({
 				publicId: nanoid(),
 				file: file,
@@ -48,7 +49,6 @@
 			});
 			if (!resCloud.public_id) throw new Error('Μη έγκυρη μορφή αρχείου: φωτογραφία');
 
-			submitting = true;
 			const filename = `${resCloud.public_id}.${resCloud.format}`;
 			const post = {
 				title,
@@ -105,7 +105,7 @@
 
 <section class="newPost">
 	{#if submitting}
-		<Modal>
+		<div class="spinnerBackground">
 			<div class="spinnerWrapper">
 				<Circle2
 					size="100"
@@ -115,12 +115,12 @@
 					unit="px"
 				/>
 			</div>
-		</Modal>
+		</div>
 	{/if}
 	<form on:submit|preventDefault={onsubmit}>
 		<label id="titleLabel" for="titleInput">Τίτλος </label>
 		<textarea id="titleInput" bind:value={title} on:focus={labelShine} on:blur={stopLabelShine} />
-		<label id="contentLabel" for="contentInput">Περιεχόμενο</label>
+		<label id="contentLabel" for="contentInput">Κείμενο</label>
 		<textarea
 			id="contentInput"
 			bind:value={content}
@@ -173,10 +173,15 @@
 	form {
 		display: grid;
 		grid-template-columns: repeat(12, 1fr);
-		grid-template-rows: repeat(6, 20rem);
+		grid-auto-rows: 4.5rem;
 		gap: 1rem;
-		padding-top: 15rem;
+		padding: 20rem 0;
 		letter-spacing: 0.3rem;
+
+		@include break($media-small) {
+			gap: 0.5;
+			padding-top: 12rem;
+		}
 
 		label {
 			font-size: 2.6rem;
@@ -196,56 +201,119 @@
 	}
 
 	#titleLabel {
-		grid-row: 1/2;
 		grid-column: 3/4;
+		grid-row: 1/4;
+		display: flex;
 		padding-bottom: 0.5rem;
 		letter-spacing: 0.1rem;
 		writing-mode: vertical-rl;
 		text-orientation: upright;
+		@include break($media-xLarge) {
+			grid-column: 2/3;
+		}
+		@include break($media-medium) {
+			grid-column: 1/2;
+		}
+		@include break($media-small) {
+			grid-column: 1/5;
+			grid-row: 1/2;
+			align-items: flex-end;
+			padding-bottom: 0;
+			writing-mode: initial;
+			text-orientation: initial;
+		}
 	}
 	#titleInput {
 		grid-column: 4/10;
-		grid-row: 1/2;
+		grid-row: 1/4;
 		background-color: #975c8d;
 		font-size: 3rem;
+		@include break($media-xxLarge) {
+			grid-column: 4/11;
+		}
+		@include break($media-xLarge) {
+			grid-column: 3/12;
+		}
+		@include break($media-medium) {
+			grid-column: 2/11;
+		}
+		@include break($media-small) {
+			grid-column: 1/-1;
+			grid-row: 2/5;
+		}
 	}
 	#contentLabel {
-		grid-column: 7/12;
-		grid-row: 2/3;
+		grid-column: 7/13;
+		grid-row: 7/8;
 		display: flex;
 		align-items: flex-end;
+		@include break($media-xLarge) {
+			grid-column: 5/12;
+		}
+		@include break($media-small) {
+			grid-column: 1/-1;
+			grid-row: 5/6;
+		}
 	}
 	#contentInput {
 		grid-column: 7/13;
-		grid-row: 3/7;
+		grid-row: 8/22;
 		background-color: #1f4690;
 		font-size: 2rem;
 		font-weight: 300;
+		@include break($media-xLarge) {
+			grid-column: 5/13;
+		}
+		@include break($media-small) {
+			grid-column: 1/-1;
+			grid-row: 6/18;
+		}
 	}
 	#imageLabel {
 		grid-column: 2/4;
-		grid-row: 3/4;
+		grid-row: 11/12;
 		display: flex;
 		align-items: flex-end;
+		@include break($media-xLarge) {
+			grid-column: 1/3;
+		}
+		@include break($media-small) {
+			grid-column: 1/-1;
+			grid-row: 19/20;
+		}
 	}
 
 	#btnUploadImg {
 		grid-column: 2/4;
-		grid-row: 4/5;
+		grid-row: 12/16;
 		position: relative;
-		border: 4px solid $color-white;
+		border: 5px solid $color-white;
 		border-radius: 15px;
 		padding: 3rem;
 		background-color: transparent;
 		color: $color-white;
+		@include break($media-xLarge) {
+			grid-column: 1/3;
+		}
+		@include break($media-small) {
+			grid-column: 1/6;
+			grid-row: 20/25;
+		}
+		@include break($media-xSmall) {
+			grid-column: 1/8;
+			border-width: 3px;
+		}
 
 		&:after {
 			content: '+';
 			position: absolute;
-			bottom: 0rem;
+			bottom: -0.5rem;
 			right: 1.5rem;
-			font-size: 8rem;
+			font-size: 7rem;
 			transition: transform 0.5s;
+			@include break($media-xLarge) {
+				font-size: 6rem;
+			}
 		}
 
 		&:hover:after {
@@ -255,16 +323,24 @@
 
 	#previewImage {
 		grid-column: 2/5;
-		grid-row: 4/10;
+		grid-row: 12/22;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		@include break($media-xLarge) {
+			grid-column: 1/4;
+		}
+		@include break($media-small) {
+			grid-column: 1/-1;
+			grid-row: 20 /28;
+		}
 
 		img {
-			width: 100%;
+			max-width: 100%;
 			height: auto;
+			max-height: 100%;
 			border-radius: 15px;
-			object-fit: cover;
+			object-fit: contain;
 		}
 
 		button {
@@ -272,7 +348,7 @@
 			gap: 0.5rem;
 			align-items: center;
 			align-content: baseline;
-			margin-top: 1rem;
+			margin-top: 1.5rem;
 			padding: 0.4rem 0.5rem;
 			border-radius: 5px;
 			color: $color-white;
@@ -295,7 +371,7 @@
 
 	#btnSubmit {
 		grid-column: 2/3;
-		grid-row: 2/3;
+		grid-row: 5/9;
 		width: 15rem;
 		height: 15rem;
 		margin: auto 0;
@@ -304,10 +380,34 @@
 		background-color: #fed049;
 		color: $color-black;
 		transition: all 1.5s ease-in;
+		@include break($media-xLarge) {
+			grid-column: 2/3;
+			grid-row: 4/9;
+			width: 13rem;
+			height: 13rem;
+		}
+		@include break($media-small) {
+			justify-self: center;
+			grid-column: 1/-1;
+			grid-row: 29 / 30;
+			width: 50%;
+			height: 9rem;
+			margin-top: 2rem;
+			border-radius: 10px;
+			transition: all 0.7s;
+		}
+
 		&:active,
 		&:hover {
 			cursor: pointer;
 			transform: rotate(360deg);
+
+			@include break($media-small) {
+				transform: none;
+				background-color: transparent;
+				border-color: #fed049;
+				color: $color-white;
+			}
 		}
 		span {
 			display: flex;
@@ -319,7 +419,27 @@
 			border-radius: 15px;
 			background-color: $color-white;
 			left: 40%;
+			@include break($media-xLarge) {
+				font-size: 1.6rem;
+			}
+			@include break($media-small) {
+				margin: auto;
+				left: auto;
+				background-color: transparent;
+				letter-spacing: 0.3rem;
+			}
 		}
+	}
+	.spinnerBackground {
+		position: fixed;
+		inset: 0;
+		height: 100%;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #181818d8;
+		z-index: 100;
 	}
 
 	.spinnerWrapper {

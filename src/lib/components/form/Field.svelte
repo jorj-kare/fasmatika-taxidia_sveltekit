@@ -19,23 +19,15 @@
 	function oninput(e) {
 		const value = e.currentTarget.value;
 
-		if (
-			validate?.name === 'isPasswordsTheSame' &&
-			validate($formStore.values?.password, value)
-		) {
+		if (validate?.name === 'isPasswordsTheSame' && validate($formStore.values?.password, value)) {
 			$formStore.errors[name] = validate($formStore.values?.password, value);
-		} else if (
-			validate &&
-			validate.name !== 'isPasswordsTheSame' &&
-			validate(value)
-		) {
+		} else if (validate && validate.name !== 'isPasswordsTheSame' && validate(value)) {
 			$formStore.errors[name] = validate(value, label);
 		} else {
 			delete $formStore.errors[name];
 		}
 
-		$formStore.values[name] =
-			type === 'file' ? e.currentTarget.files[0] : value;
+		$formStore.values[name] = type === 'file' ? e.currentTarget.files[0] : value;
 	}
 	function previewImg(e) {
 		const fr = new FileReader();
@@ -55,13 +47,7 @@
 <div class="wrapper">
 	{#if type !== 'file'}
 		<label for={id}>{label}</label>
-		<input
-			{id}
-			{type}
-			{name}
-			on:input={oninput}
-			on:focus={labelShine}
-			on:blur={stopLabelShine} />
+		<input {id} {type} {name} on:input={oninput} on:focus={labelShine} on:blur={stopLabelShine} />
 	{:else}
 		<div class="upload-wrapper">
 			<input
@@ -71,7 +57,8 @@
 				{id}
 				{type}
 				{name}
-				on:input={oninput} />
+				on:input={oninput}
+			/>
 			{#if !imgSrc}
 				<button
 					class="img-wrapper"
@@ -79,7 +66,8 @@
 					title="Upload image"
 					on:click|preventDefault={() => {
 						fileInput.click();
-					}}>
+					}}
+				>
 					<div id="icon-user">
 						<FaUserAstronaut />
 					</div>
@@ -95,7 +83,8 @@
 							fileInput.value = '';
 							imgSrc = '';
 							delete $formStore.values.profileImg;
-						}}><GoTrashcan /></button>
+						}}><GoTrashcan /></button
+					>
 				</div>
 			{/if}
 		</div>
@@ -111,6 +100,7 @@
 	.wrapper {
 		display: flex;
 		flex-flow: column;
+		position: relative;
 		label {
 			padding-bottom: 0.5rem;
 		}
@@ -148,7 +138,8 @@
 				color: $color-white;
 				transition: transform 0.5s;
 			}
-			&:hover:after {
+			&:hover:after,
+			&:active:after {
 				transform: scale(1.2);
 			}
 			#icon-user {
@@ -173,7 +164,12 @@
 		}
 	}
 	.error {
+		position: absolute;
+		top: 3rem;
+		left: 1rem;
 		font-size: 1.6rem;
+		// background-color: rgba(218, 216, 216, 0.777);
+		border-radius: 5px;
 		color: $color-error;
 	}
 </style>

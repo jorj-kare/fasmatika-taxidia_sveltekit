@@ -30,11 +30,7 @@
 		invalidateAll();
 	}
 
-	$: if (
-		$page.data.user &&
-		stars.length > 0 &&
-		stars.includes($page.data.user.username)
-	) {
+	$: if ($page.data.user && stars.length > 0 && stars.includes($page.data.user.username)) {
 		userFavorite = true;
 	} else {
 		userFavorite = false;
@@ -60,7 +56,8 @@
 		}}
 		on:mouseleave={() => {
 			showNames = false;
-		}}>{stars.length}</button>
+		}}>{stars.length}</button
+	>
 	{#if showNames}
 		<ul
 			id="starNames"
@@ -70,7 +67,8 @@
 			}}
 			on:mouseleave={() => {
 				showNames = false;
-			}}>
+			}}
+		>
 			{#each stars as star}
 				<li style:background-color={getRandomColor()}>{star}</li>
 			{/each}
@@ -85,20 +83,30 @@
 		align-self: flex-start;
 		display: flex;
 		align-items: center;
-		gap: 1rem;
-		font-size: 2.5rem;
+		font-size: 2rem;
+
 		#starBtn {
-			width: 6rem;
+			width: 5rem;
 			padding: 0;
 			transition: all 0.4s;
 			color: inherit;
-			&:hover {
+
+			@include break($media-xSmall) {
+				width: 5rem;
+			}
+			&:hover,
+			&:active {
 				transform: scale(1.1);
 			}
 		}
 		#starCounter {
 			color: inherit;
 			cursor: pointer;
+			@include break($media-small) {
+				font-size: 2.8rem;
+				margin-left: 0.5rem;
+				margin-top: 0.5rem;
+			}
 		}
 		#starNames {
 			position: absolute;
@@ -108,7 +116,7 @@
 			gap: 0.5rem;
 			left: 2rem;
 			bottom: -8rem;
-			width: 57rem;
+			width: 100%;
 			height: 10rem;
 			padding: 1rem;
 			outline: 2px solid;
@@ -118,6 +126,9 @@
 			list-style: none;
 			text-transform: capitalize;
 			cursor: pointer;
+			@include break($media-small) {
+				bottom: -10rem;
+			}
 			li {
 				padding: 0.5rem;
 				color: $color-white;

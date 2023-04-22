@@ -16,7 +16,7 @@
 	const randomColor = getRandomColor();
 </script>
 
-<section class="posts">
+<section class="posts grid-layout">
 	{#if data.posts.data.length > 0}
 		{#each data.posts.data as { _id, title, img, author, createdAt }}
 			<PostPreview
@@ -39,11 +39,8 @@
 
 <style lang="scss">
 	.posts {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
-		padding: 15rem 10rem;
+		padding-top: 20rem;
 		min-height: 100vh;
-		gap: 10rem;
 		background-color: $color-white;
 		.wrapper {
 			grid-column: 1/-1;
@@ -61,9 +58,15 @@
 			text-align: center;
 			letter-spacing: 0.2rem;
 			color: $color-black;
-
+			@include break($media-small) {
+				width: 40rem;
+				height: 40rem;
+			}
 			#icon-scope {
 				width: 20rem;
+				@include break($media-small) {
+					width: 15rem;
+				}
 			}
 		}
 	}

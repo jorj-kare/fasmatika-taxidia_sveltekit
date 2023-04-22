@@ -1,7 +1,7 @@
 @use 'animations';
 @use 'variables';
-@use 'btns';
-
+@use 'components';
+@use 'mixins' as *;
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700&display=swap');
 * {
 	margin: 0;
@@ -10,6 +10,16 @@
 }
 html {
 	font-size: 62.5%; // 10px/16px = 62.5% -> 1rem = 10px
+
+	@include break(variables.$media-xLarge) {
+		font-size: 56.25%;
+	}
+	@include break(variables.$media-medium) {
+		font-size: 50%;
+	}
+	@include break(variables.$media-xSmall) {
+		font-size: 43.75%;
+	}
 }
 html,
 body {
@@ -48,6 +58,14 @@ textarea {
 	box-sizing: border-box;
 	border: 1px solid variables.$color-white;
 	border-radius: 2px;
+}
+input,
+button,
+select,
+textarea,
+a,
+li {
+	-webkit-tap-highlight-color: transparent;
 }
 
 input:disabled {

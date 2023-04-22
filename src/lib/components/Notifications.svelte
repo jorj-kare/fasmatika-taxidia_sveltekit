@@ -16,7 +16,8 @@
 	<div
 		transition:fly={{ duration: 1200, y: -100, easing: backInOut }}
 		class:error={$notificationStore.type === 'error'}
-		class:success={$notificationStore.type === 'success'}>
+		class:success={$notificationStore.type === 'success'}
+	>
 		<p>{$notificationStore.msg}</p>
 	</div>{/if}
 

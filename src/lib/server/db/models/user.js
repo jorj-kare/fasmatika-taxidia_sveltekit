@@ -6,14 +6,8 @@ const userSchema = new Schema({
 		type: String,
 		unique: true,
 		required: [true, 'Το πεδίο όνομα χρήστη είναι υποχρεωτικό.'],
-		minlength: [
-			3,
-			'Το όνομα χρήστη πρέπει να περιέχει τουλάχιστον 5 χαρακτήρες.'
-		],
-		maxlength: [
-			20,
-			'Το όνομα χρήστη πρέπει να μην ξεπερνάει τους 20 χαρακτήρες.'
-		],
+		minlength: [3, 'Το όνομα χρήστη πρέπει να περιέχει τουλάχιστον 5 χαρακτήρες.'],
+		maxlength: [20, 'Το όνομα χρήστη πρέπει να μην ξεπερνάει τους 20 χαρακτήρες.'],
 		trim: true
 	},
 	role: {
@@ -55,10 +49,7 @@ userSchema.pre('save', async function (next) {
 	this.confirmPassword = undefined;
 	next();
 });
-userSchema.methods.isPasswordCorrect = async function (
-	candidatePassword,
-	password
-) {
+userSchema.methods.isPasswordCorrect = async function (candidatePassword, password) {
 	return await bcrypt.compare(candidatePassword, password);
 };
 const User = model('User', userSchema);

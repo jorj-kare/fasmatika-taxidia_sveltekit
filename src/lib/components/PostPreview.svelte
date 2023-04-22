@@ -108,11 +108,14 @@
 		#title {
 			display: flex;
 			align-items: center;
-
+			white-space: break-spaces;
 			h1 {
 				grid-area: text;
 				font-weight: 400;
 				font-size: 4rem;
+				@include break($media-xSmall) {
+					font-size: 3.5rem;
+				}
 			}
 			span {
 				font-size: 5rem;
@@ -133,9 +136,14 @@
 	}
 	.details {
 		position: relative;
-		font-size: 2.5rem;
-		letter-spacing: 0.2rem;
+		font-size: 2rem;
+		letter-spacing: 0.1rem;
 		font-weight: 400;
+
+		@include break($media-xSmall) {
+			font-size: 2rem;
+			letter-spacing: normal;
+		}
 		#stars {
 			grid-area: star;
 		}
@@ -152,8 +160,8 @@
 		#profileImg {
 			grid-area: img;
 			justify-self: center;
-			width: 7rem;
-			height: 7rem;
+			width: 5rem;
+			height: 5rem;
 			border-radius: 50px;
 			object-fit: cover;
 		}

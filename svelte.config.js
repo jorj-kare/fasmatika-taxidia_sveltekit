@@ -1,12 +1,12 @@
 // import adapter from '@sveltejs/adapter-netlify';
-// import adapter from '@sveltejs/adapter-auto';
-import adapter from '@sveltejs/adapter-vercel';
+import adapter from '@sveltejs/adapter-auto';
+// import adapter from '@sveltejs/adapter-vercel';
 import preprocessor from 'svelte-preprocess';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	preprocess: preprocessor({
 		scss: {
-			prependData: '@use "src/styles/_variables.scss" as *;'
+			prependData: '@use "src/styles/_variables.scss" as *; @use "src/styles/_mixins.scss" as *; '
 		}
 	}),
 

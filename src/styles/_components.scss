@@ -1,0 +1,45 @@
+@use './variables' as *;
+@use './mixins' as *;
+.btn-round {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 7rem;
+	height: 7rem;
+	border: 3px solid $color-white;
+	border-radius: 50px;
+	color: $color-white;
+	background-color: transparent;
+	font-size: 2.2rem;
+	font-weight: 600;
+	cursor: pointer;
+	@include break($media-xSmall) {
+		width: 6rem;
+		height: 6rem;
+		font-size: 2rem;
+	}
+}
+
+.grid-layout {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(40rem, 1fr));
+	padding: 15rem 10rem;
+	gap: 10rem;
+
+	@include break($media-xxLarge) {
+		padding-inline: 5rem;
+		row-gap: 10rem;
+		column-gap: 5rem;
+	}
+	@include break($media-large) {
+		grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+		column-gap: 3rem;
+		padding-inline: 3rem;
+	}
+
+	@include break($media-small) {
+		grid-template-columns: 1fr;
+		padding: 8rem 3rem;
+		row-gap: 15rem;
+	}
+}

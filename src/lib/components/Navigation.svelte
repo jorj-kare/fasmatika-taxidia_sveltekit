@@ -6,17 +6,19 @@
 </script>
 
 {#if $navStore.type === 'nav'}
-	<div transition:fade|local={{ duration: 100 }} class="nav">
-		<button
-			id="nav-btn"
-			class="nav__button btn-round"
-			class:rotate={hidden}
-			type="button">
+	<div class="nav">
+		<button id="nav-btn" class="nav__button btn-round" class:rotate={hidden} type="button">
 			M
 		</button>
 
 		{#if !hidden}
-			<ul class="nav__menu">
+			<ul
+				class="nav__menu"
+				transition:fly|local={{
+					duration: 1200,
+					easing: backInOut
+				}}
+			>
 				<li
 					class="nav__item"
 					id="home"
@@ -25,7 +27,8 @@
 						delay: 50,
 						duration: 1200,
 						easing: backInOut
-					}}>
+					}}
+				>
 					<a href="/">Αρχική</a>
 				</li>
 				<li
@@ -36,7 +39,8 @@
 						delay: 200,
 						duration: 1200,
 						easing: backInOut
-					}}>
+					}}
+				>
 					<a href="/new-post">Νέο πόστ</a>
 				</li>
 
@@ -48,7 +52,8 @@
 						delay: 350,
 						duration: 1200,
 						easing: backInOut
-					}}>
+					}}
+				>
 					<a href="/account">Προφίλ</a>
 				</li>
 			</ul>
@@ -56,21 +61,29 @@
 	</div>
 {:else if ($navStore.type = 'closeBtn')}
 	<a
-		transition:fade|local={{ duration: 100 }}
 		id="closeBtn"
 		class="btn-round"
 		class:light={$navStore.mode === 'light'}
-		href="/{$navStore.page}">
-		<p /></a>
+		href="/{$navStore.page}"
+	>
+		<p /></a
+	>
 {/if}
 
 <style lang="scss">
 	.nav {
 		position: absolute;
-		top: 4rem;
+		top: 3rem;
 		right: 4rem;
 		z-index: 1;
-
+		@include break($media-xxLarge) {
+			top: 2rem;
+			right: 2rem;
+		}
+		@include break($media-xSmall) {
+			top: 2rem;
+			right: 2rem;
+		}
 		button {
 			transition: 0.5s all linear;
 			&:hover,
@@ -85,6 +98,12 @@
 			gap: 0.25rem;
 			margin: 0 -1.6rem;
 			list-style: none;
+			@include break($media-small) {
+				border-radius: 20px;
+				padding: 2rem 0;
+				background-color: #03001c56;
+			}
+
 			:nth-child(1) {
 				margin-top: 0.8rem;
 			}
@@ -121,6 +140,14 @@
 		font-size: 2.8rem;
 		z-index: 3;
 		transition: box-shadow 0.5s;
+		@include break($media-xxLarge) {
+			top: 2rem;
+			right: 2rem;
+		}
+		@include break($media-xSmall) {
+			top: 2rem;
+			right: 2rem;
+		}
 		&:hover {
 			box-shadow: 0 0 8px $color-white;
 		}
@@ -132,7 +159,14 @@
 			left: 2.5rem;
 			-webkit-backface-visibility: hidden;
 			transition: all 1s;
+			@include break($media-xSmall) {
+				content: '\268A';
+				transform: rotate(0deg);
+				position: relative;
+				left: 0;
+			}
 		}
+
 		&:after {
 			content: '\2758';
 			position: absolute;
@@ -140,12 +174,18 @@
 			left: 2.2rem;
 			-webkit-backface-visibility: hidden;
 			transition: all 1s;
+			@include break($media-xSmall) {
+				content: '';
+			}
 		}
 		&:hover:after {
 			transform: rotate(-399deg) scale(1.2);
 		}
 		&:hover:before {
 			transform: rotate(399deg) scale(1.2);
+			@include break($media-xSmall) {
+				transform: rotate(0) scale(1);
+			}
 		}
 	}
 	.light {
