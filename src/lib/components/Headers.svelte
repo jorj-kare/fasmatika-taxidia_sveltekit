@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 </script>
 
-<header transition:fade|local={{ duration: 600 }}>
+<header out:fade={{ duration: 400 }}>
 	<h1>
 		ΗΜΕΡΟΛΟΓΙΑ ΦΑ<span>ΝΤΑ</span>ΣΜΑΤΙΚΩΝ ΤΑΞΙΔΙΩΝ
 	</h1>

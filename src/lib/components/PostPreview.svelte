@@ -22,7 +22,7 @@
 	}
 
 	async function deletePost() {
-		if (!confirm('Are you sure that you want to delete this post?')) return;
+		if (!confirm('Είσαι σίγουρος/η οτι θέλεις να διαγράψεις αυτό το πόστ ?')) return;
 		await fetch(`/api/posts/${id}`, {
 			method: 'DELETE'
 		});

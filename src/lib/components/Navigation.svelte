@@ -73,7 +73,7 @@
 <style lang="scss">
 	.nav {
 		position: absolute;
-		top: 3rem;
+		top: 4rem;
 		right: 4rem;
 		z-index: 1;
 		@include break($media-xxLarge) {

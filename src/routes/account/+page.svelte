@@ -17,7 +17,7 @@
 	}
 </script>
 
-<div class="account" transition:fade|local={{ duration: 600 }}>
+<div class="account" out:fade|local={{ duration: 400 }}>
 	{#if data.user}
 		<AccountBtn href={`/account/myPosts/${data.user.id}`}>Οι καταχωρήσεις μου</AccountBtn>
 		<AccountBtn href="#" on:click={logout}>Αποσύνδεση</AccountBtn>

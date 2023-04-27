@@ -3,11 +3,7 @@
 	export let backgroundColor = '#00000';
 </script>
 
-<div
-	class="wrapper"
-	style:background-color={backgroundColor}
-	transition:fade|local={{ duration: 600 }}
->
+<div class="wrapper" style:background-color={backgroundColor} out:fade|local={{ duration: 400 }}>
 	<slot />
 </div>
 

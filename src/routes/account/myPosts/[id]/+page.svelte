@@ -4,6 +4,7 @@
 	import navStore from '$lib/stores/nav.js';
 	import GiPeriscope from 'svelte-icons/gi/GiPeriscope.svelte';
 	import { onDestroy } from 'svelte';
+	import { fade } from 'svelte/transition';
 
 	export let data;
 	$navStore.mode = 'light';
@@ -16,7 +17,7 @@
 	const randomColor = getRandomColor();
 </script>
 
-<section class="posts grid-layout">
+<section class="posts grid-layout" out:fade={{ duration: 400 }}>
 	{#if data.posts.data.length > 0}
 		{#each data.posts.data as { _id, title, img, author, createdAt }}
 			<PostPreview

@@ -8,6 +8,7 @@
 	import { labelShine, stopLabelShine } from '$lib/utils/inputFocus.js';
 	import { goto } from '$app/navigation';
 	import { nanoid } from 'nanoid';
+	import { fade } from 'svelte/transition';
 
 	export let data;
 
@@ -133,7 +134,7 @@
 	}
 </script>
 
-<section class="newPost">
+<section class="newPost" out:fade={{ duration: 400 }}>
 	{#if submitting}
 		<div class="spinnerBackground">
 			<div class="spinnerWrapper">
