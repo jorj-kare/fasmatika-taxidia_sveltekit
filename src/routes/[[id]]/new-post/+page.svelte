@@ -1,7 +1,7 @@
 <script>
+	import { PUBLIC_CLOUDINARY_URL } from '$env/static/public';
 	import { cloudinary } from '$lib/utils/cloudinary.js';
 	import { Circle2 } from 'svelte-loading-spinners';
-	import Modal from '$components/Modal.svelte';
 	import GoTrashcan from 'svelte-icons/go/GoTrashcan.svelte';
 	import IoMdImages from 'svelte-icons/io/IoMdImages.svelte';
 	import notificationsStore from '$lib/stores/notifications.js';
@@ -17,7 +17,13 @@
 	let fileInput;
 	let file;
 	let submitting = false;
-
+	let editMode = false;
+	if (data.data?.post) {
+		title = data.data.post.title;
+		content = data.data.post.content;
+		imgSrc = PUBLIC_CLOUDINARY_URL + data.data.post.img;
+		editMode = true;
+	}
 	export const snapshot = {
 		capture: () => {
 			return {
@@ -40,40 +46,63 @@
 			if (!data.user) {
 				throw new Error('Πρέπει να συνδεθείς πρώτα!');
 			}
-			submitting = true;
-			const resCloud = await cloudinary({
-				publicId: nanoid(),
-				file: file,
-				action: 'upload',
-				folder: 'posts'
-			});
-			if (!resCloud.public_id) throw new Error('Μη έγκυρη μορφή αρχείου: φωτογραφία');
 
-			const filename = `${resCloud.public_id}.${resCloud.format}`;
+			let filename;
+			submitting = true;
+
+			// If create a new post or edit post and there is a file save image
+			if ((editMode && file) || !editMode) {
+				const resCloud = await cloudinary({
+					publicId: nanoid(),
+					file: file,
+					action: 'upload',
+					folder: 'posts'
+				});
+
+				if (!resCloud.public_id) throw new Error('Μη έγκυρη μορφή αρχείου: φωτογραφία');
+
+				filename = `${resCloud.public_id}.${resCloud.format}`;
+			}
+
 			const post = {
 				title,
-				content,
-				img: filename,
-				author: data.user.id
+				content
 			};
 
-			const res = await fetch('/api/posts', {
-				method: 'Post',
+			if (filename) post.img = filename;
+			if (!editMode) post.author = data.user.id;
+
+			const url = editMode ? `/api/posts/${data.data.post._id}` : '/api/posts';
+			const fetchMethod = editMode ? 'PATCH' : 'POST';
+
+			const res = await fetch(url, {
+				method: fetchMethod,
 				body: JSON.stringify(post)
 			});
+
 			const resJson = await res.json();
 
 			if (!res.ok) {
 				submitting = false;
-				await cloudinary({
-					publicId: 'posts/' + filename,
-					action: 'destroy',
-					folder: 'posts'
-				});
+				// If request fails delete newly created image
+				if (file) {
+					await cloudinary({
+						publicId: 'posts/' + filename,
+						action: 'destroy',
+						folder: 'posts'
+					});
+				}
 
 				throw new Error(resJson.message);
 			}
-
+			// If new image in edit and request is ok delete the previews image.
+			if (editMode && file) {
+				await cloudinary({
+					publicId: data.data.post.img.split('.')[0],
+					action: 'destroy',
+					folder: 'posts'
+				});
+			}
 			$notificationsStore.type = 'success';
 			$notificationsStore.msg = 'Το ποστ έχει αποθηκευτεί με επιτυχία';
 			$notificationsStore.sec = 2000;
@@ -84,6 +113,7 @@
 				});
 			}, 2500);
 		} catch (err) {
+			submitting = false;
 			$notificationsStore.type = 'error';
 			$notificationsStore.msg = err.message;
 		}
@@ -439,7 +469,7 @@
 		justify-content: center;
 		align-items: center;
 		background-color: #181818d8;
-		z-index: 100;
+		z-index: 9;
 	}
 
 	.spinnerWrapper {

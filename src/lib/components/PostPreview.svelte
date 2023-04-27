@@ -1,4 +1,5 @@
 <script>
+	import Modal from '$lib/components/Modal.svelte';
 	import Stars from '$lib/components/Stars.svelte';
 	import getRandomColor from '$lib/utils/getRandomColor';
 	import { goto, invalidateAll } from '$app/navigation';
@@ -66,7 +67,12 @@
 		{/if}
 	</div>
 	{#if editable}
-		<button id="btnDelete" on:click={deletePost}>Delete post</button>
+		<div class="btn-wrapper">
+			<a class="btn btn--edit" style="--random-color:{randomColor}" href={`/${id}/new-post`}
+				>Επεξεργασία</a
+			>
+			<button class="btn btn--delete" on:click={deletePost}>Διαγραφή</button>
+		</div>
 	{/if}
 </div>
 
@@ -75,20 +81,37 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		#btnDelete {
+	}
+	.btn-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		gap: 2rem;
+
+		.btn {
+			margin: 0;
 			padding: 1rem;
 			align-self: center;
-			border: 1px solid $color-error;
-			color: $color-error;
+			border: 1px solid;
 			border-radius: 5px;
 			font-size: 1.8rem;
 			transition: all 0.5s;
+
 			&:hover {
 				color: $color-white;
-				background-color: $color-error;
+				background-color: var(--random-color);
+			}
+			&--delete {
+				color: $color-error;
+				border-color: $color-error;
+				&:hover {
+					background-color: $color-error;
+				}
 			}
 		}
 	}
+
 	.post {
 		display: flex;
 		flex-direction: column;
